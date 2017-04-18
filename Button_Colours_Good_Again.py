@@ -1,4 +1,4 @@
-# Author: Calumks <calumks@live.com>
+# Author: C9HDN
 # Get reviewer class
 from aqt.reviewer import Reviewer
 
