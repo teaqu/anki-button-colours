@@ -1,5 +1,5 @@
 # anki-button-colours
 
-![Screenshot](screenshot.png?raw=true')
+![Screenshot](screenshot.jpeg?raw=true')
 
 https://ankiweb.net/shared/info/2494384865
