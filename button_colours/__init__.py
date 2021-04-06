@@ -1,18 +1,32 @@
-# Author: C9HDN
-# Get reviewer class
-from aqt.reviewer import Reviewer
 from aqt import mw
+from aqt import gui_hooks
 
-# Replace _answerButtonList method
-def answerButtonList(self):
+def buttonColours(buttons_tuple, reviewer, card):
     config = mw.addonManager.getConfig(__name__)
-    l = ((1, "<font color='"+config['Again']+"'>" + _("Again") + "</font>"),)
-    cnt = self.mw.col.sched.answerButtons(self.card)
-    if cnt == 2:
-        return l + ((2, "<font color='"+config['Good (2 Answers)']+"'>" + _("Good") + "</font>"),)
-    elif cnt == 3:
-        return l + ((2, "<font color='"+config['Good (3 Answers)']+"'>" + _("Good") + "</font>"), (3, "<font color='"+config['Easy (3 Answers)']+"'>" + _("Easy") + "</font>"))
-    else:
-        return l + ((2, "<font color='"+config['Hard']+"'>" + _("Hard") + "</font>"), (3, "<font color='"+config['Good (4 Answers)']+"'>" + _("Good") + "</font>"), (4, "<font color='"+config['Easy (4 Answers)']+"'>" + _("Easy") + "</font>"))
+    button_count = mw.col.sched.answerButtons(card)
+    colours = config['colours'].get(str(button_count) + ' answers')
 
-Reviewer._answerButtonList = answerButtonList
+    # if coulours found in config
+    if colours:
+
+        # Create new list of coloured buttons
+        coloured_buttons = []
+        for button in buttons_tuple:
+            text = button[1]
+
+            # See if colour exists else paint black
+            try:
+                colour = colours[button[0] - 1]
+            except IndexError:
+                colour = "black"
+
+            # Add colour to button
+            font = "<font color='{}'>{}</font>".format(colour, text)
+
+            coloured_buttons.append((button[0], font))
+
+        return tuple(coloured_buttons)
+    else:
+        return buttons_tuple
+
+gui_hooks.reviewer_will_init_answer_buttons.append(buttonColours)
