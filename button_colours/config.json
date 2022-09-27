@@ -3,5 +3,10 @@
     "2 answers": ["red", "green"],
     "3 answers": ["red", "green", "blue"],
     "4 answers": ["red", "orange", "green", "blue"]
+  },
+  "colours-dark": {
+    "2 answers": ["#EB212E", "#30B700"],
+    "3 answers": ["#EB212E","#30B700","#00AEEF"],
+    "4 answers": ["#EB212E","#FFC600","#30B700","#00AEEF"]
   }
 }

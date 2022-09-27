@@ -1,10 +1,13 @@
-from aqt import mw
-from aqt import gui_hooks
+from aqt import mw, gui_hooks
+from aqt.theme import ThemeManager
 
 def buttonColours(buttons_tuple, reviewer, card):
     config = mw.addonManager.getConfig(__name__)
     button_count = mw.col.sched.answerButtons(card)
-    colours = config['colours'].get(str(button_count) + ' answers')
+
+    # Set theme colours
+    configColours = config['colours-dark'] if ThemeManager._determine_night_mode(ThemeManager) else config['colours']
+    colours = configColours.get(str(button_count) + ' answers')
 
     # if coulours found in config
     if colours:
